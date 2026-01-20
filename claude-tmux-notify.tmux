@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# tmux-claude-notify - TPM entry point
+# claude-tmux-notify - TPM entry point
 # Notifies when Claude Code is waiting for input in tmux sessions
 #
 
@@ -23,37 +23,37 @@ get_tmux_option() {
 # Set default options if not already set
 set_default_options() {
 	# Only set if not already defined
-	[[ -z "$(tmux show-option -gqv @claude-notify-cycle-key)" ]] &&
-		tmux set-option -g @claude-notify-cycle-key 'C-c'
+	[[ -z "$(tmux show-option -gqv @claude-tmux-notify-cycle-key)" ]] &&
+		tmux set-option -g @claude-tmux-notify-cycle-key 'C-c'
 
-	[[ -z "$(tmux show-option -gqv @claude-notify-icon)" ]] &&
-		tmux set-option -g @claude-notify-icon '🤖'
+	[[ -z "$(tmux show-option -gqv @claude-tmux-notify-icon)" ]] &&
+		tmux set-option -g @claude-tmux-notify-icon '🤖'
 
-	[[ -z "$(tmux show-option -gqv @claude-notify-clear-on-focus)" ]] &&
-		tmux set-option -g @claude-notify-clear-on-focus 'on'
+	[[ -z "$(tmux show-option -gqv @claude-tmux-notify-clear-on-focus)" ]] &&
+		tmux set-option -g @claude-tmux-notify-clear-on-focus 'on'
 
-	[[ -z "$(tmux show-option -gqv @claude-notify-picker-key)" ]] &&
-		tmux set-option -g @claude-notify-picker-key 'C-y'
+	[[ -z "$(tmux show-option -gqv @claude-tmux-notify-picker-key)" ]] &&
+		tmux set-option -g @claude-tmux-notify-picker-key 'C-y'
 
-	[[ -z "$(tmux show-option -gqv @claude-notify-picker-size)" ]] &&
-		tmux set-option -g @claude-notify-picker-size '60%,50%'
+	[[ -z "$(tmux show-option -gqv @claude-tmux-notify-picker-size)" ]] &&
+		tmux set-option -g @claude-tmux-notify-picker-size '60%,50%'
 }
 
 # Set up keybindings
 setup_keybindings() {
 	local cycle_key
-	cycle_key=$(get_tmux_option @claude-notify-cycle-key 'C-c')
+	cycle_key=$(get_tmux_option @claude-tmux-notify-cycle-key 'C-c')
 	tmux bind-key "$cycle_key" run-shell "$SCRIPTS_DIR/cycle.sh"
 
 	local picker_key
-	picker_key=$(get_tmux_option @claude-notify-picker-key 'C-n')
+	picker_key=$(get_tmux_option @claude-tmux-notify-picker-key 'C-n')
 	tmux bind-key "$picker_key" run-shell "$SCRIPTS_DIR/fzf-picker.sh"
 }
 
 # Set up tmux hooks for auto-clear on focus
 setup_hooks() {
 	local clear_on_focus
-	clear_on_focus=$(get_tmux_option @claude-notify-clear-on-focus 'on')
+	clear_on_focus=$(get_tmux_option @claude-tmux-notify-clear-on-focus 'on')
 
 	if [[ "$clear_on_focus" == "on" ]]; then
 		tmux set-hook -g pane-focus-in "run-shell '$SCRIPTS_DIR/clear.sh current'"

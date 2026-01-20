@@ -1,7 +1,7 @@
-# tmux-claude-notify
+# claude-tmux-notify
 
-[![CI](https://github.com/donaldgifford/tmux-claude-notify/actions/workflows/ci.yml/badge.svg)](https://github.com/donaldgifford/tmux-claude-notify/actions/workflows/ci.yml)
-[![Release](https://github.com/donaldgifford/tmux-claude-notify/actions/workflows/release.yml/badge.svg)](https://github.com/donaldgifford/tmux-claude-notify/releases)
+[![CI](https://github.com/donaldgifford/claude-tmux-notify/actions/workflows/ci.yml/badge.svg)](https://github.com/donaldgifford/claude-tmux-notify/actions/workflows/ci.yml)
+[![Release](https://github.com/donaldgifford/claude-tmux-notify/actions/workflows/release.yml/badge.svg)](https://github.com/donaldgifford/claude-tmux-notify/releases)
 
 A tmux plugin that notifies you when Claude Code is waiting for input in any tmux session or window.
 
@@ -27,7 +27,7 @@ A tmux plugin that notifies you when Claude Code is waiting for input in any tmu
 Add to your `~/.tmux.conf`:
 
 ```bash
-set -g @plugin 'donaldgifford/tmux-claude-notify'
+set -g @plugin 'donaldgifford/claude-tmux-notify'
 ```
 
 Then press `prefix + I` to install.
@@ -37,19 +37,19 @@ Then press `prefix + I` to install.
 Pin to a specific version:
 
 ```bash
-set -g @plugin 'donaldgifford/tmux-claude-notify#v1.0.0'
+set -g @plugin 'donaldgifford/claude-tmux-notify#v1.0.0'
 ```
 
 ### Manual Installation
 
 ```bash
-git clone https://github.com/donaldgifford/tmux-claude-notify ~/.tmux/plugins/tmux-claude-notify
+git clone https://github.com/donaldgifford/claude-tmux-notify ~/.tmux/plugins/claude-tmux-notify
 ```
 
 Add to your `~/.tmux.conf`:
 
 ```bash
-run-shell ~/.tmux/plugins/tmux-claude-notify/claude-notify.tmux
+run-shell ~/.tmux/plugins/claude-tmux-notify/claude-tmux-notify.tmux
 ```
 
 Reload tmux:
@@ -64,19 +64,19 @@ Add these to your `~/.tmux.conf` before the plugin is loaded:
 
 ```bash
 # Keybinding to cycle through notifications (without prefix)
-set -g @claude-notify-cycle-key 'C-c'
+set -g @claude-tmux-notify-cycle-key 'C-c'
 
 # Keybinding for fzf picker popup (without prefix)
-set -g @claude-notify-picker-key 'C-y'
+set -g @claude-tmux-notify-picker-key 'C-y'
 
 # fzf picker popup size (width,height)
-set -g @claude-notify-picker-size '60%,50%'
+set -g @claude-tmux-notify-picker-size '60%,50%'
 
 # Status bar icon
-set -g @claude-notify-icon '🤖'
+set -g @claude-tmux-notify-icon '🤖'
 
 # Auto-clear notification when pane receives focus
-set -g @claude-notify-clear-on-focus 'on'
+set -g @claude-tmux-notify-clear-on-focus 'on'
 ```
 
 ## Status Bar Integration
@@ -87,19 +87,19 @@ Add the status widget to your tmux status bar.
 
 ```bash
 # Add before the TPM initialization line
-set -g status-right '#{E:@tokyo-night-tmux_prepend_status_right}#(~/.tmux/plugins/tmux-claude-notify/scripts/status.sh)'
+set -g status-right '#{E:@tokyo-night-tmux_prepend_status_right}#(~/.tmux/plugins/claude-tmux-notify/scripts/status.sh)'
 ```
 
 Or manually prepend to your existing status-right:
 
 ```bash
-set -g status-right '#(~/.tmux/plugins/tmux-claude-notify/scripts/status.sh)#[default] ... your existing status'
+set -g status-right '#(~/.tmux/plugins/claude-tmux-notify/scripts/status.sh)#[default] ... your existing status'
 ```
 
 ### Generic setup
 
 ```bash
-set -g status-right '#(~/.tmux/plugins/tmux-claude-notify/scripts/status.sh) | %H:%M'
+set -g status-right '#(~/.tmux/plugins/claude-tmux-notify/scripts/status.sh) | %H:%M'
 ```
 
 ## Claude Code Hook Setup
@@ -115,7 +115,7 @@ Configure Claude Code to trigger notifications. Add to `~/.claude/settings.json`
         "hooks": [
           {
             "type": "command",
-            "command": "~/.tmux/plugins/tmux-claude-notify/scripts/notify.sh"
+            "command": "~/.tmux/plugins/claude-tmux-notify/scripts/notify.sh"
           }
         ]
       }
@@ -158,13 +158,13 @@ Press `prefix + C-y` (or your configured key) to open an interactive picker:
 
 ```bash
 # Send a test notification
-~/.tmux/plugins/tmux-claude-notify/scripts/notify.sh --message "Test"
+~/.tmux/plugins/claude-tmux-notify/scripts/notify.sh --message "Test"
 
 # Clear all notifications
-~/.tmux/plugins/tmux-claude-notify/scripts/clear.sh all
+~/.tmux/plugins/claude-tmux-notify/scripts/clear.sh all
 
 # Check notification count
-~/.tmux/plugins/tmux-claude-notify/scripts/status.sh
+~/.tmux/plugins/claude-tmux-notify/scripts/status.sh
 ```
 
 ## Notification Methods
@@ -191,13 +191,13 @@ Webhook integration for Slack, Discord, or custom services.
 
 1. Verify scripts are executable:
    ```bash
-   ls -la ~/.tmux/plugins/tmux-claude-notify/scripts/
+   ls -la ~/.tmux/plugins/claude-tmux-notify/scripts/
    ```
 
 2. Test notification manually:
    ```bash
-   ~/.tmux/plugins/tmux-claude-notify/scripts/notify.sh --message "Test"
-   ~/.tmux/plugins/tmux-claude-notify/scripts/status.sh
+   ~/.tmux/plugins/claude-tmux-notify/scripts/notify.sh --message "Test"
+   ~/.tmux/plugins/claude-tmux-notify/scripts/status.sh
    ```
 
 3. Check state file:

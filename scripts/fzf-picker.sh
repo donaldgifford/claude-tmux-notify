@@ -132,11 +132,11 @@ main() {
 
 	# Get picker size from config
 	local picker_size
-	picker_size=$(get_tmux_option @claude-notify-picker-size '60%,50%')
+	picker_size=$(get_tmux_option @claude-tmux-notify-picker-size '60%,50%')
 
 	# Get icon
 	local icon
-	icon=$(get_tmux_option @claude-notify-icon '🤖')
+	icon=$(get_tmux_option @claude-tmux-notify-icon '🤖')
 
 	# Create temporary preview script
 	local preview_script="$STATE_DIR/preview.sh"
