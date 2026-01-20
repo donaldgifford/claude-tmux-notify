@@ -113,7 +113,7 @@ write_notification() {
 # Trigger notification handlers
 trigger_handlers() {
 	local methods
-	methods=$(get_tmux_option @claude-notify-methods 'tmux')
+	methods=$(get_tmux_option @claude-tmux-notify-methods 'tmux')
 
 	# Split methods by comma and trigger each
 	IFS=',' read -ra METHOD_ARRAY <<<"$methods"
