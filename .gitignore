@@ -1,0 +1,14 @@
+# Planning/internal docs
+implementation.md
+claude-hook-config.md
+
+# Claude Code local settings
+.claude
+
+# macOS
+.DS_Store
+
+# Editor
+*.swp
+*.swo
+*~

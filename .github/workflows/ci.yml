@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: ShellCheck with reviewdog
+        uses: reviewdog/action-shellcheck@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          path: "."
+          pattern: "*.sh"
+          exclude: "./.git/*"
+          check_all_files_with_shebangs: true
+          fail_on_error: true
+
+  shfmt:
+    name: Shell Formatting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install shfmt
+        run: |
+          curl -sS https://webi.sh/shfmt | sh
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Check formatting
+        run: |
+          shfmt -d scripts/*.sh scripts/handlers/*.sh claude-notify.tmux
+
+  test-plugin:
+    name: Test Plugin Load
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install tmux
+        run: sudo apt-get update && sudo apt-get install -y tmux
+
+      - name: Verify scripts are executable
+        run: |
+          for script in scripts/*.sh scripts/handlers/*.sh; do
+            if [[ -f "$script" ]]; then
+              if [[ ! -x "$script" ]]; then
+                echo "ERROR: $script is not executable"
+                exit 1
+              fi
+              echo "OK: $script"
+            fi
+          done
+
+      - name: Verify main plugin script exists
+        run: test -f claude-notify.tmux && test -x claude-notify.tmux
+
+      - name: Syntax check all scripts
+        run: |
+          for script in scripts/*.sh scripts/handlers/*.sh claude-notify.tmux; do
+            if [[ -f "$script" ]]; then
+              bash -n "$script" && echo "Syntax OK: $script"
+            fi
+          done
