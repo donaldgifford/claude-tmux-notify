@@ -54,10 +54,10 @@ jobs:
             fi
           done
       - name: Verify main plugin script exists
-        run: test -f claude-notify.tmux && test -x claude-notify.tmux
+        run: test -f claude-tmux-notify.tmux && test -x claude-tmux-notify.tmux
       - name: Syntax check all scripts
         run: |
-          for script in scripts/*.sh scripts/handlers/*.sh claude-notify.tmux; do
+          for script in scripts/*.sh scripts/handlers/*.sh claude-tmux-notify.tmux; do
             if [[ -f "$script" ]]; then
               bash -n "$script" && echo "Syntax OK: $script"
             fi
