@@ -124,8 +124,6 @@ Configure Claude Code to trigger notifications. Add to `~/.claude/settings.json`
 }
 ```
 
-See [claude-hook-config.md](claude-hook-config.md) for advanced configuration.
-
 ## Usage
 
 ### Status Bar
@@ -138,9 +136,12 @@ When Claude needs attention, the status bar shows:
 
 This indicates 3 sessions/windows have pending Claude notifications.
 
+![claude-status-notifier](assets/claude-status-notifier.png)
+
 ### Cycling Through Notifications
 
 Press `prefix + C-c` (or your configured key) to:
+
 - Jump to the oldest notification
 - Press again to cycle to the next
 - Notifications auto-clear as you visit them
@@ -148,11 +149,14 @@ Press `prefix + C-c` (or your configured key) to:
 ### fzf Picker
 
 Press `prefix + C-y` (or your configured key) to open an interactive picker:
+
 - Fuzzy search through all pending notifications
 - Preview pane shows recent terminal output
 - `Enter` to jump to selected notification
 - `Ctrl-D` to dismiss a notification without jumping
 - `Ctrl-A` to dismiss all notifications
+
+![claude-status-notifier-fzf](assets/fzf.png)
 
 ### Manual Commands
 
@@ -190,17 +194,20 @@ Webhook integration for Slack, Discord, or custom services.
 ### Notifications not appearing
 
 1. Verify scripts are executable:
+
    ```bash
    ls -la ~/.tmux/plugins/claude-tmux-notify/scripts/
    ```
 
 2. Test notification manually:
+
    ```bash
    ~/.tmux/plugins/claude-tmux-notify/scripts/notify.sh --message "Test"
    ~/.tmux/plugins/claude-tmux-notify/scripts/status.sh
    ```
 
 3. Check state file:
+
    ```bash
    cat ${TMPDIR:-/tmp}/claude-tmux-notify/notifications
    ```
@@ -212,6 +219,7 @@ Make sure you've added the status widget call to your `status-right` or `status-
 ### Keybinding not working
 
 Check for conflicts with existing keybindings:
+
 ```bash
 tmux list-keys | grep C-c
 ```
